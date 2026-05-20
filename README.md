@@ -1,178 +1,127 @@
-# Power BI – Enterprise Data Analytics
+# Power BI – Data Visualization & Dashboard Design
 
 **Ana Ballock** · [LinkedIn](https://linkedin.com/in/anaballock) · [GitHub](https://github.com/apballock)
 
 ---
 
-End-to-end Power BI project built on a live MySQL source, covering the full analytics stack: ETL, relational modeling, DAX semantic layer, and multi-scope filter architecture.
+Advanced Power BI project focused on visualization strategy, dashboard UX design, and analytical storytelling — covering chart selection logic, interactive time hierarchies, and custom tooltip architecture.
 
-**Stack:** Power BI Desktop · MySQL · DAX · Power Query M
+---
 
-**Model:** 2 fact/dimension tables · 1 Calendar dimension · 10+ DAX measures · Live database connection · Time intelligence enabled
+## Skills Demonstrated
+
+Data storytelling · Visualization strategy · Dashboard UX design · Time-series analysis · Correlation analysis · Interactive report design · Cross-filter debugging · Business insight communication
 
 ---
 
 ## Project Structure
 
-```
-├── Level 1 – Connectors & Power Query
-│   ├── MySQL Live Connection
-│   ├── ETL & Custom Column Transformations
-│   └── Calendar Table (DAX)
-├── Level 2 – Advanced DAX
-│   ├── RELATED() – Cross-table enrichment
-│   ├── SUMX / AVERAGEX – Iterator functions
-│   └── Centralized Measures Table
-└── Level 3 – Filters & CROSSFILTER
-    ├── CROSSFILTER – Bidirectional filtering
-    └── Visual / Page / Report filter scopes
+```text
+├── Exercise 1 – Chart Selection & Visual Strategy
+│   ├── Profit by Segment (Bar Chart)
+│   ├── Monthly Sales Trend (Line Chart)
+│   ├── Country Sales Share (Donut Chart)
+│   └── Units Sold vs Profit (Scatter Plot)
+├── Exercise 2 – Date Hierarchy & Drill-Down
+└── Exercise 3 – Custom Tooltip Page
 ```
 
 ---
 
-## Level 1 – Connectors & Power Query
+## Exercise 1 — Chart Selection & Executive Dashboard
 
-### MySQL Live Connection
+Designed a four-panel executive dashboard applying deliberate chart selection logic — matching each visualization type to its analytical purpose rather than defaulting to generic visuals.
 
-Replaced static flat files with a direct connection to a local MySQL database (`sales_db`), integrating the `products` and `products` tables into Power BI via MySQL Connector/NET. This establishes a production-style data source pattern where the model refreshes against the database rather than a snapshot.
-
-![MySQL Connector](screenshots/nivel1_ejerc1_mysql_connector.png)
-
----
-
-### ETL & Custom Column Transformations
-
-Built a revenue classification column in Power Query M, segmenting transactions into High / Medium / Low tiers based on sales thresholds. During data profiling, caught a silent upstream quality issue — a leading whitespace in a column name — that was silently invalidating downstream logic. Resolved before applying the classification.
-
-**Finding:** Polarized revenue distribution with strong high-end concentration and significant low-value volume — a signal for mid-market strategy development.
-
-![Custom Column](screenshots/nivel1_ejerc2_custom_column.png)
-
----
-
-### Calendar Table
-
-Built a dedicated Calendar dimension using `CALENDAR()` and `ADDCOLUMNS()`, covering 2013–2014 with Year, Month Number, Month Name, Quarter, and Day of Week attributes. Linked to `financials[Date]` and configured `MonthName` to sort by `MonthNumber` for correct chronological rendering.
-
-```dax
-Calendar =
-ADDCOLUMNS(
-    CALENDAR(DATE(2013,1,1), DATE(2014,12,31)),
-    "Year",        YEAR([Date]),
-    "MonthNumber", MONTH([Date]),
-    "MonthName",   FORMAT([Date], "MMMM"),
-    "Quarter",     "Q" & FORMAT(QUARTER([Date]), "0"),
-    "DayOfWeek",   FORMAT([Date], "dddd")
-)
-```
-
-A dedicated Calendar table is a hard requirement for reliable time intelligence — without it, DAX functions like YoY and rolling averages produce incorrect results under filter context changes.
-
-![Calendar Table](screenshots/nivel1_ejerc3_calendar_table.png)
-
----
-
-## Level 2 – Advanced DAX
-
-### RELATED() – Cross-Table Enrichment
-
-Enriched the `sales` fact table with product attributes from the `products` dimension using `RELATED()`, keeping the model normalized rather than denormalizing the source data. Derived Product Name, Unit Price, and Total Revenue as calculated columns via the existing `product_id` relationship.
-
-```dax
-Product Name  = RELATED('sales_db products'[product_name])
-Unit Price    = RELATED('sales_db products'[unit_price])
-Total Revenue = 'sales_db sales'[units_sold] * 'sales_db sales'[Unit Price]
-```
-
-**Finding:** *Paseo* ranked first in total revenue, driven by a combination of unit price and transaction volume.
-
-![RELATED Chart](screenshots/nivel2_ejerc1_related.png)
-
----
-
-### SUMX / AVERAGEX – Iterator Functions
-
-Implemented dynamic revenue aggregation using `SUMX()` and `AVERAGEX()`, evaluating `units_sold × unit_price` row-by-row across the `sales` table via `RELATED()` — the correct pattern when calculation operands live in different tables.
-
-```dax
-Total Revenue SUMX =
-SUMX(
-    'sales_db sales',
-    'sales_db sales'[units_sold] * RELATED('sales_db products'[unit_price])
-)
-
-Avg Revenue per Sale =
-AVERAGEX(
-    'sales_db sales',
-    'sales_db sales'[units_sold] * RELATED('sales_db products'[unit_price])
-)
-```
-
-Built a Country × Category revenue matrix alongside a KPI card (Avg Revenue per Sale: **3.04K**).
-
-**Finding:** Spain + Bikes produced the highest revenue combination, driven by unit price premium and transaction density.
-
-![SUMX Matrix](screenshots/nivel2_ejerc2_sumx.png)
-
----
-
-### Centralized Measures Table
-
-Consolidated all DAX measures into a single `_Measures` table (underscore prefix pins it to the top of the Data pane), keeping the semantic layer discoverable and maintainable as the model scales. Covers revenue, margin, COGS, and CROSSFILTER-based measures.
-
-Scattered measures across multiple tables are a common source of technical debt in Power BI projects — this structure prevents that from the start.
-
-![Measures Table](screenshots/nivel2_ejerc3_measures_table.png)
-
----
-
-## Level 3 – Filters & CROSSFILTER
-
-### CROSSFILTER – Dynamic Filter Direction
-
-Used `CROSSFILTER()` inside `CALCULATE()` to temporarily activate bidirectional filtering between `sales` and `products`, enabling a count of products with actual sales activity — a metric the default single-direction topology cannot produce.
-
-```dax
-Products with Sales =
-CALCULATE(
-    COUNTROWS('sales_db products'),
-    CROSSFILTER(
-        'sales_db sales'[product_id],
-        'sales_db products'[product_id],
-        BOTH
-    )
-)
-```
-
-**Finding:** All 5 catalog products registered sales — no inactive inventory. Bikes led in total units sold.
-
-![CROSSFILTER](screenshots/nivel3_ejerc1_crossfilter.png)
-
----
-
-### Multi-Scope Filter Architecture
-
-Applied Power BI's three filter scopes independently to demonstrate how enterprise dashboards layer analytical constraints without duplicating datasets.
-
-| Scope | Filter Applied | Reach |
+| Business Question | Visual Selected | Rationale |
 |---|---|---|
-| Visual | Sales > 500,000 | Single chart |
-| Page | Country ∈ {USA, Canada, France} | All visuals on the page |
-| Report | Year = 2014 | All pages in the report |
+| Which segment generates the most profit? | Bar Chart | Categorical comparison |
+| How did sales evolve month by month? | Line Chart | Continuous time-series |
+| What share of sales does each country hold? | Donut Chart | Part-to-whole contribution |
+| Is there a relationship between volume and profit? | Scatter Plot | Correlation & outlier detection |
 
-This hierarchy lets analysts enforce global reporting standards (report scope), build audience-specific pages (page scope), and surface focused KPIs (visual scope) — all within the same `.pbix` file.
-
-![Filters](screenshots/nivel3_ejerc2_filters.png)
+![Chart Selection Dashboard](screenshots/nivel1_ejerc1_chart_selection.png)
 
 ---
 
-## Summary
+### Profit by Segment
 
-| Area | Highlights |
+Clustered bar chart sorted descending by Profit, surfacing a counterintuitive result: the **Enterprise** segment operated at a loss while **Government** led in profitability — despite Enterprise having significant sales activity.
+
+Chart title written as an analytical conclusion rather than a label:
+> *Government Leads Profit — Enterprise Operates at a Loss*
+
+This framing converts the visual from a data display into an executive-ready insight.
+
+---
+
+### Monthly Sales Trend
+
+Line chart plotted against the Calendar table's `MonthName` field (sorted by `MonthNumber`) to ensure chronological accuracy. The trend confirmed a strong Q4 acceleration with **October** as the peak sales month, consistent with typical end-of-year commercial patterns.
+
+---
+
+### Country Sales Share
+
+Donut chart with percentage labels showing **USA as the largest contributor** to total sales. During analysis, a cross-filter interaction temporarily shifted the apparent top country to Germany — a realistic reminder that active visual selections alter aggregation context and must be accounted for when communicating findings to non-technical stakeholders.
+
+---
+
+### Units Sold vs Profit — Scatter Plot
+
+Scatter plot segmented by business category, revealing that **sales volume and profitability are not correlated** in this dataset. Government clustered in the high-volume, high-profit quadrant. Enterprise landed below zero regardless of units sold — pointing to a structural pricing or cost issue independent of demand.
+
+> *More units sold does not mean higher profit. Enterprise's losses are structural, not volumetric.*
+
+---
+
+## Exercise 2 — Date Hierarchy & Drill-Down Navigation
+
+Built a three-level date hierarchy inside the Calendar table (Year → Quarter → Month) enabling users to drill through time granularities within a single visual — replacing what would otherwise require three separate charts and two additional pages.
+
+| Level | Top Performer |
 |---|---|
-| Data Source | Live MySQL connection, no flat files |
-| ETL | Power Query M, data quality catch during profiling |
-| Modeling | Normalized star schema, Calendar dimension, DAX semantic layer |
-| DAX | RELATED, SUMX, AVERAGEX, CROSSFILTER, centralized measures |
-| Filtering | Visual / Page / Report scope architecture |
-| Business Output | Revenue segmentation, top-product ranking, geographic breakdown |
+| Quarter | Q4 |
+| Month | October |
+
+During development, only 2014 data appeared in the hierarchy despite the dataset containing 2013 records. Root cause: a report-level filter from a prior exercise was silently restricting the full dataset. Resolved by auditing active filters — a practical example of how missing data in BI environments is often caused by filter state rather than broken relationships or incomplete sources.
+
+**UX impact:** A single drill-down hierarchy reduces dashboard clutter, shortens time-to-insight, and supports both summary-level and granular analysis within the same view.
+
+![Date Hierarchy Drill-Down](screenshots/nivel1_ejerc2_hierarchy.png)
+
+---
+
+## Exercise 3 — Custom Tooltip Page
+
+Implemented a custom Report Page Tooltip connected to the main Segment bar chart, delivering contextual profitability and cost metrics on hover without adding visual noise to the primary dashboard surface.
+
+### Tooltip Components
+
+| Visual | Metric |
+|---|---|
+| KPI Card | Profit Margin % |
+| KPI Card | Total COGS |
+| Mini Chart | Sales by Product |
+
+### Design Challenges
+
+Custom tooltip pages in Power BI don't auto-scale to tooltip dimensions — visuals overflow boundaries and typography breaks without manual intervention. Resolved through iterative layout optimization: increased the custom page canvas, adjusted card font sizes, restructured the visual arrangement for compact rendering, and re-enabled Tooltip mode after each modification.
+
+This is a common production challenge in enterprise dashboard development where UI/UX engineering is as critical as analytical accuracy.
+
+### Business Insight
+
+On hover, **Channel Partners** consistently returned the highest Profit Margin % — confirming that this segment operates with significantly greater efficiency than its sales volume alone would suggest. Lower transaction volume paired with high margin is often a signal of premium positioning or favorable cost structure.
+
+![Custom Tooltip](screenshots/nivel1_ejerc3_custom_tooltip.png)
+
+---
+
+## Key Takeaways
+
+- Chart type selection driven by analytical intent, not aesthetic preference
+- Executive-ready insight titles used in place of generic chart labels
+- Cross-filter behavior documented and communicated as a data literacy consideration
+- Scatter plot analysis surfaced a structural profitability finding not visible in standard bar/line charts
+- Drill-down hierarchy replaced three separate visuals with a single interactive component
+- Custom tooltip architecture implemented with full layout optimization for production-ready rendering
