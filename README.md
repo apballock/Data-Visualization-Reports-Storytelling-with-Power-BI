@@ -271,8 +271,6 @@ Page 3 – Strategic Recommendations → What we should do
 
 This separation ensures each page serves a distinct audience need — summary, diagnosis, action — without forcing executives to extract conclusions from raw charts.
 
-![Storytelling](screenshots/nivel3_ejerc1_storytelling.png)
-
 ---
 
 ## Page 1 — Executive Overview
@@ -307,6 +305,7 @@ The decision layer of the report, translating analytical findings into three con
 
 A supporting ranked table (Country × Segment × Profit Margin %) provides the validation layer for each recommendation, allowing stakeholders to interrogate the underlying data without leaving the page.
 
+![Storytelling](screenshots/nivel3_ejerc1_storytelling.png)
 ---
 
 ## Report Distribution
