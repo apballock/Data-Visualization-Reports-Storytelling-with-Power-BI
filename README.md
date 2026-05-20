@@ -210,7 +210,7 @@ The USA represents the largest share of total sales in the donut chart analysis.
 
 | File | Description |
 |---|---|
-| `nivel1_ejerc1_chart_selection.png` | Dashboard containing all four visualizations |
+| `(screenshots/nivel3_ejerc1_crossfilter.png)` | Dashboard containing all four visualizations |
 
 ---
 
