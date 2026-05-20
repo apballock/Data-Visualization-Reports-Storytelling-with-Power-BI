@@ -208,9 +208,8 @@ The USA represents the largest share of total sales in the donut chart analysis.
 
 ## Files Generated
 
-| File | Description |
-|---|---|
-| (screenshots/nivel1_ejerc1_chart_selection.png) | Dashboard containing all four visualizations |
+![Chart Selection Dashboard](screenshots/nivel1_ejerc1_chart_selection.png)
+| Dashboard containing all four visualizations |
 
 ---
 
@@ -322,9 +321,8 @@ Drill-down enables users to navigate multiple time granularities inside a single
 
 ## Files Generated
 
-| File | Description |
-|---|---|
-| `nivel1_ejerc2_hierarchy.png` | Month-level drill-down visualization |
+![Hierarchy](screenshots/nivel1_ejerc2_hierarchy.png)
+| Month-level drill-down visualization |
 
 ---
 
@@ -452,6 +450,5 @@ Custom tooltips provide contextual details dynamically on hover, reducing dashbo
 
 ## Files Generated
 
-| File | Description |
-|---|---|
-| `nivel1_ejerc3_custom_tooltip.png` | Main visual displaying custom tooltip interactions |
+![Tooltip](screenshots/nivel1_ejerc3_custom_tooltip.png)
+| Main visual displaying custom tooltip interactions |
