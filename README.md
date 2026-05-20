@@ -128,11 +128,7 @@ On hover, **Channel Partners** consistently returned the highest Profit Margin %
 
 ---
 
-# Power BI – Interactivity & Dashboard UX Design
-
-**Ana Ballock** · [LinkedIn](https://linkedin.com/in/anaballock) · [GitHub](https://github.com/apballock)
-
----
+# Interactivity & Dashboard UX Design
 
 Advanced Power BI project focused on dashboard interaction architecture, contextual navigation, and executive-level UX design — transforming functional reports into polished, stakeholder-ready analytical products.
 
@@ -251,11 +247,7 @@ A dashboard that communicates poorly fails regardless of analytical depth. Visua
 
 ---
 
-# Power BI – Data Storytelling & Executive Reporting
-
-**Ana Ballock** · [LinkedIn](https://linkedin.com/in/anaballock) · [GitHub](https://github.com/apballock)
-
----
+# Data Storytelling & Executive Reporting
 
 End-to-end executive report built on Power BI, structured as a three-page analytical narrative that moves from performance overview to root-cause analysis to strategic recommendations — designed for C-level and director-level audiences.
 
@@ -278,6 +270,8 @@ Page 3 – Strategic Recommendations → What we should do
 ```
 
 This separation ensures each page serves a distinct audience need — summary, diagnosis, action — without forcing executives to extract conclusions from raw charts.
+
+![Storytelling](screenshots/nivel3_ejerc1_storytelling.png)
 
 ---
 
