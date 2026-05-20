@@ -248,3 +248,87 @@ A dashboard that communicates poorly fails regardless of analytical depth. Visua
 - Dashboard UX is not decorative — layout, hierarchy, and title framing directly impact how findings are understood and acted upon
 - Insight-driven titles convert charts into conclusions, reducing the interpretive burden on non-technical audiences
 - Theme enforcement and alignment tooling are essential practices for enterprise-grade report development
+
+---
+
+# Power BI – Data Storytelling & Executive Reporting
+
+**Ana Ballock** · [LinkedIn](https://linkedin.com/in/anaballock) · [GitHub](https://github.com/apballock)
+
+---
+
+End-to-end executive report built on Power BI, structured as a three-page analytical narrative that moves from performance overview to root-cause analysis to strategic recommendations — designed for C-level and director-level audiences.
+
+---
+
+## Skills Demonstrated
+
+Data storytelling · Executive dashboard architecture · Multi-page report design · Business recommendation framing · Time-series analysis · Segment and geographic performance analysis · Report governance
+
+---
+
+## Report Architecture
+
+The report follows a deliberate three-layer structure that mirrors real executive decision-making workflows:
+
+```text
+Page 1 – Executive Overview     → What is happening
+Page 2 – Performance Analysis   → Why it is happening
+Page 3 – Strategic Recommendations → What we should do
+```
+
+This separation ensures each page serves a distinct audience need — summary, diagnosis, action — without forcing executives to extract conclusions from raw charts.
+
+---
+
+## Page 1 — Executive Overview
+
+High-level financial snapshot combining KPI cards (Sales, Profit, Profit Margin %) with a monthly sales trend line chart, giving leadership an immediate read on overall performance and seasonal behavior across 2013–2014.
+
+The Calendar table's `MonthName` field, sorted by `MonthNumber`, ensures chronologically accurate trend rendering — a critical detail in time-series reporting where alphabetic sorting would silently distort the narrative.
+
+**Key finding:** Sales follow a clear seasonal pattern with consistent Q4 acceleration, peaking in October.
+
+---
+
+## Page 2 — Business Performance Analysis
+
+Deeper diagnostic layer built around three visuals: a Profit Margin % breakdown by Segment, a geographic Sales map, and a Country × Segment matrix for granular cross-dimensional analysis.
+
+The analysis surfaces a structural imbalance across segments: high-volume segments do not correlate with high profitability, and vice versa. This divergence between revenue generation and margin efficiency is the central analytical finding that drives the recommendations on Page 3.
+
+All visuals are cross-filter enabled — selections on any visual propagate context to the others, supporting interactive root-cause exploration during live stakeholder sessions.
+
+---
+
+## Page 3 — Strategic Recommendations
+
+The decision layer of the report, translating analytical findings into three concrete business actions:
+
+**Channel Partners — expand.** Highest Profit Margin % in the dataset despite the lowest sales volume. The efficiency signal justifies investment in partnership incentives and channel growth to scale a proven margin structure.
+
+**Enterprise — reprice.** High sales volume paired with negative or near-zero profitability indicates a structural issue in pricing or discount policy — not a demand problem. Revenue optimization here is a cost/pricing exercise, not a sales one.
+
+**Seasonality — shift spend earlier.** Q4, and October specifically, consistently outperforms. Moving marketing investment into Q3 would capture demand earlier in the acceleration curve rather than spending into a peak that is already occurring.
+
+A supporting ranked table (Country × Segment × Profit Margin %) provides the validation layer for each recommendation, allowing stakeholders to interrogate the underlying data without leaving the page.
+
+---
+
+## Report Distribution
+
+Exported to PDF via File → Export for static executive distribution, preserving the full multi-page narrative in a format accessible outside the Power BI environment.
+
+**PDF vs. Power BI Service:** PDF is appropriate for fixed executive reporting and governance-controlled distribution. Power BI Service is preferable when stakeholders need live interactivity, filter exploration, or real-time data refresh.
+
+Report structure and page ordering were finalized before export — in Power BI, PDF output reflects the full report as-built, making pre-export design decisions part of the communication strategy.
+
+---
+
+## Key Takeaways
+
+- Three-page narrative architecture translates raw data into a decision-ready executive product
+- Page-level separation of overview, analysis, and recommendations reduces interpretive burden on non-technical audiences
+- Segment profitability analysis revealed that volume and margin efficiency are structurally decoupled in this dataset — a finding invisible in single-metric views
+- Recommendations are grounded in specific analytical evidence, not general observations
+- Report design and export strategy treated as part of governance and communication, not afterthoughts
