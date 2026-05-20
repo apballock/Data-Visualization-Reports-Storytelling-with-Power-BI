@@ -125,3 +125,126 @@ On hover, **Channel Partners** consistently returned the highest Profit Margin %
 - Scatter plot analysis surfaced a structural profitability finding not visible in standard bar/line charts
 - Drill-down hierarchy replaced three separate visuals with a single interactive component
 - Custom tooltip architecture implemented with full layout optimization for production-ready rendering
+
+---
+
+# Power BI – Interactivity & Dashboard UX Design
+
+**Ana Ballock** · [LinkedIn](https://linkedin.com/in/anaballock) · [GitHub](https://github.com/apballock)
+
+---
+
+Advanced Power BI project focused on dashboard interaction architecture, contextual navigation, and executive-level UX design — transforming functional reports into polished, stakeholder-ready analytical products.
+
+---
+
+## Skills Demonstrated
+
+Dashboard interaction design · Bookmark-based UI architecture · Drill-through navigation · Visual hierarchy · Layout design · Report storytelling · UX optimization for BI tools
+
+---
+
+## Project Structure
+
+```text
+├── Exercise 1 – Bookmark Navigation System
+├── Exercise 2 – Drill-Through Analysis
+└── Exercise 3 – UX Design & Visual Polish
+```
+
+---
+
+## Exercise 1 — Bookmark-Based Navigation
+
+Implemented a toggle UI pattern using Power BI Bookmarks and navigation buttons, enabling users to switch between two analytical perspectives — Sales by Segment and Profit by Segment — within a single page, without duplicating visuals or adding report pages.
+
+Both charts were layered in the same canvas position, with visibility controlled via the Selection Panel. Two bookmarks captured each distinct visibility state, and navigation buttons were wired to their respective bookmarks to create an application-like switching experience.
+
+**Design rationale:** Displaying both charts simultaneously would split the reader's attention. The toggle enforces one analytical question at a time, reducing cognitive load — a particularly important consideration for non-technical stakeholders who need to act on insights, not interpret layouts.
+
+**Other production use cases for this pattern:** executive vs. operational views, KPI summary vs. detail toggle, guided storytelling presentations, and show/hide slicer panels.
+
+![Bookmark Navigation](screenshots/nivel2_ejerc1_bookmarks.png)
+
+---
+
+## Exercise 2 — Drill-Through Navigation
+
+Architected a drill-through system connecting a high-level overview to a dedicated **Country Detail** page, enabling analysts to move from pattern identification to root-cause investigation without losing filter context.
+
+### Detail Page Components
+
+| Visual | Purpose |
+|---|---|
+| Sales KPI Card | Total revenue by country |
+| Profit KPI Card | Total profit by country |
+| Profit Margin % Card | Operational efficiency |
+| Sales by Segment Chart | Segment-level breakdown |
+| Product Table | Transaction-level detail |
+
+All visuals respond dynamically to the selected country context. A back button preserves navigation continuity.
+
+### Business Findings
+
+Canada returned **$24.89M in Sales** and **$14.18M in Profit**. France's **Profit Margin of 15.53%** positioned it as one of the more operationally efficient markets in the dataset.
+
+### Drill-Through vs. Drill-Down
+
+These are distinct navigation patterns serving different analytical needs:
+
+| Pattern | Behavior | Best Used For |
+|---|---|---|
+| Drill-Down | Hierarchical exploration within the same visual | Time periods, geographic regions |
+| Drill-Through | Navigation to a dedicated detail page | Entity-level deep dives (country, product, customer) |
+
+Overview pages surface patterns. Detail pages explain them — this two-layer architecture mirrors how analysis actually happens in business environments.
+
+![Drill-Through Detail](screenshots/nivel2_ejerc2_drillthrough.png)
+
+---
+
+## Exercise 3 — Executive Dashboard Redesign
+
+Rebuilt the dashboard's visual layer from a technically functional but dense report into an executive-ready analytical product, applying UX design principles without modifying the underlying data model.
+
+### Changes Applied
+
+**Theme consistency** — applied a unified theme across all pages to standardize color, typography, and visual styling. In multi-developer or multi-page environments, themes are the primary mechanism for enforcing brand and design coherence at scale.
+
+**Insight-driven titles** — replaced generic descriptive labels with analytical conclusions:
+
+| Before | After |
+|---|---|
+| *Total Sales by Segment* | *Government Leads Profit — Enterprise Operates at a Loss* |
+
+Titles written as conclusions allow executives to extract value from a glance, before reading the underlying chart.
+
+**Structured header** — added a rectangle-backed header with the dashboard title and author attribution, establishing a clear visual entry point and professional ownership.
+
+**Clutter reduction** — removed decorative borders, reduced visual density, and increased whitespace. Whitespace is a functional design element: it directs attention and reduces visual parsing time.
+
+**Alignment** — used Power BI's alignment and distribution tools to standardize spacing and vertical positioning across all visuals, improving scan speed and structural legibility.
+
+### Before vs. After
+
+| Dimension | Before | After |
+|---|---|---|
+| Visual consistency | Fragmented | Unified theme |
+| Hierarchy | Weak | Clear entry point and flow |
+| Titles | Descriptive | Insight-driven |
+| Density | Cluttered | Whitespace-optimized |
+| Audience readiness | Technical | Executive-ready |
+
+A dashboard that communicates poorly fails regardless of analytical depth. Visual design directly shapes how stakeholders perceive and act on findings.
+
+![UX Redesign](screenshots/nivel2_ejerc3_ux_design.png)
+
+---
+
+## Key Takeaways
+
+- Bookmark architecture enables multi-view dashboards without page proliferation
+- Drill-through separates overview storytelling from operational detail, supporting natural analytical workflows
+- Dashboard UX is not decorative — layout, hierarchy, and title framing directly impact how findings are understood and acted upon
+- Insight-driven titles convert charts into conclusions, reducing the interpretive burden on non-technical audiences
+- Theme enforcement and alignment tooling are essential practices for enterprise-grade report development
